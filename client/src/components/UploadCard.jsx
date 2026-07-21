@@ -39,14 +39,19 @@ function UploadCard() {
 
             const response = await uploadPdf(file);
 
-            setMessage(response.message);
+            console.log(response.preview);
 
             console.log(response);
 
         } catch (error) {
             console.error(error);
 
-            setMessage("Upload failed.");
+            console.log(error.response?.data);
+
+            setMessage(
+                error.response?.data?.message ||
+                "Upload failed."
+            );
         } finally {
             setLoading(false);
         }
@@ -65,10 +70,9 @@ function UploadCard() {
                     duration-300
                     backdrop-blur-xl
 
-                    ${
-                        isDragActive
-                            ? "border-blue-500 bg-blue-500/10"
-                            : "border-slate-700 bg-slate-900/60 hover:border-blue-500"
+                    ${isDragActive
+                        ? "border-blue-500 bg-blue-500/10"
+                        : "border-slate-700 bg-slate-900/60 hover:border-blue-500"
                     }
                 `}
             >
